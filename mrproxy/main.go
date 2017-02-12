@@ -21,14 +21,14 @@ var configFile = flag.String("c", "/etc/redis/mrproxy.conf", "Config file locati
 var logFile = flag.String("l", "/var/log/mrproxy.log", "Log file for mrproxy")
 
 type proxyConfig struct {
-	redisServer         string
-	redisPort           int
-	redisPassword       string
-	redisMaxIdle        int
-	redisMaxConnections int
-	redisTimeoutSeconds int
-	bindIPAddress       string
-	bindPort            int
+	RedisServer         string
+	RedisPort           int
+	RedisPassword       string
+	RedisMaxIdle        int
+	RedisMaxConnections int
+	RedisTimeoutSeconds int
+	BindIPAddress       string
+	BindPort            int
 }
 
 func main() {
@@ -39,10 +39,10 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	redis := fmt.Sprintf("%s:%d", c.redisServer, c.redisPort)
-	pool := newConnPool(redis, c.redisPassword, c.redisMaxIdle, c.redisMaxConnections, c.redisTimeoutSeconds)
+	redis := fmt.Sprintf("%s:%d", c.RedisServer, c.RedisPort)
+	pool := newConnPool(redis, c.RedisPassword, c.RedisMaxIdle, c.RedisMaxConnections, c.RedisTimeoutSeconds)
 
-	bind := fmt.Sprintf("%s:%d", c.bindIPAddress, c.bindPort)
+	bind := fmt.Sprintf("%s:%d", c.BindIPAddress, c.BindPort)
 	l, err := net.Listen("tcp", bind)
 	if err != nil {
 		log.Fatalln(err)
